@@ -1,0 +1,487 @@
+Project Idea
+
+Think of building your own Bitly or TinyURL.
+
+Instead of
+
+https://github.com/minoti/lushlife
+
+you generate
+
+https://short.ly/a7Xk92
+
+When someone visits it,
+
+short.ly/a7Xk92
+
+they get redirected to the original URL.
+
+Sounds easy.
+
+But the interesting part is making it production-ready.
+
+Suggested Repository Names
+
+My favorites:
+
+Professional
+shortstack
+briefly
+shrtn
+urlforge ⭐
+lynkr
+redir
+shortify
+snaplink
+linkvault ⭐
+relayurl
+tinylink-engine
+url-core
+shortlink-service ⭐
+rapidlink
+urlmesh ⭐
+
+I would personally use
+
+urlforge
+
+or
+
+shortlink-service
+
+They sound like internal Microsoft services.
+
+Tech Stack
+
+Since you're targeting Microsoft, I'd recommend:
+
+Backend
+
+FastAPI
+PostgreSQL
+Redis
+SQLAlchemy
+Docker
+
+Authentication
+
+JWT
+
+Deployment
+
+Docker Compose
+Nginx
+
+Testing
+
+Pytest
+
+Logging
+
+Prometheus
+Grafana (optional)
+
+Frontend
+
+React
+
+Cloud
+
+Azure later
+Folder Structure
+urlforge/
+
+backend/
+
+    api/
+
+    services/
+
+    models/
+
+    database/
+
+    middleware/
+
+frontend/
+
+docker/
+
+docs/
+
+tests/
+
+docker-compose.yml
+
+README.md
+
+Looks immediately professional.
+
+Phase 1 (Basic URL Shortener)
+
+User submits
+
+https://openai.com
+
+Database stores
+
+Short	Original
+aB72X	openai.com
+
+When someone visits
+
+/aB72X
+
+they're redirected.
+
+Phase 2 (Authentication)
+
+Allow users to create accounts.
+
+Users can
+
+login
+logout
+manage links
+delete links
+update links
+
+Now you're showing
+
+JWT
+Authentication
+Authorization
+Phase 3 (Analytics)
+
+Every redirect records
+
+timestamp
+
+country
+
+browser
+
+device
+
+OS
+
+IP hash
+
+referer
+
+Dashboard shows
+
+Total clicks
+
+Today's clicks
+
+Countries
+
+Devices
+
+Browsers
+
+Top links
+
+Recruiters LOVE dashboards.
+
+Phase 4 (Redis Caching)
+
+Normally
+
+User
+
+↓
+
+PostgreSQL
+
+↓
+
+Redirect
+
+Every redirect hits the database.
+
+Slow.
+
+Instead
+
+User
+
+↓
+
+Redis
+
+↓
+
+Found?
+
+↓
+
+Redirect
+
+↓
+
+Else
+
+↓
+
+Postgres
+
+↓
+
+Store in Redis
+
+Now
+
+99% of redirects
+
+never touch PostgreSQL.
+
+You can honestly write
+
+Reduced database reads through Redis caching.
+
+Phase 5 (Rate Limiting)
+
+Prevent abuse.
+
+Example
+
+100 requests/minute
+
+Beyond that
+
+429 Too Many Requests
+
+Now you've demonstrated
+
+Middleware
+Redis
+API Security
+Phase 6 (Expiration)
+
+Allow
+
+Expires in
+
+7 days
+
+30 days
+
+Never
+
+Expired links
+
+↓
+
+404
+
+Phase 7 (Custom Aliases)
+
+Instead of
+
+aB72X
+
+User chooses
+
+minoti
+
+resume
+
+github
+
+portfolio
+
+Now
+
+short.ly/portfolio
+
+works.
+
+Phase 8 (QR Codes)
+
+Every link automatically generates
+
+QR Code.
+
+Great resume bullet.
+
+Phase 9 (Admin Dashboard)
+
+Admin sees
+
+Total users
+Active links
+Total clicks
+Cache hit ratio
+API traffic
+Expired links
+
+Looks like an internal Microsoft tool.
+
+Phase 10 (Docker)
+
+Everything runs using
+
+docker compose up
+
+Containers
+
+Frontend
+
+Backend
+
+Redis
+
+Postgres
+
+Nginx
+
+Huge engineering signal.
+
+Phase 11 (Background Workers)
+
+Instead of deleting expired links synchronously,
+
+Create a worker
+
+Celery
+
+or
+
+RQ
+
+Runs every hour
+
+↓
+
+Deletes expired records.
+
+Now you've introduced
+
+Asynchronous processing.
+
+Phase 12 (CI/CD)
+
+GitHub Actions
+
+On every push
+
+Lint
+
+↓
+
+Tests
+
+↓
+
+Docker Build
+
+↓
+
+Deploy
+
+Recruiters love seeing this.
+
+Phase 13 (Testing)
+
+Add
+
+Unit tests
+API tests
+Integration tests
+
+Target
+
+80%+
+
+coverage
+Phase 14 (System Design)
+
+Your README should include
+
+                    Users
+
+                      |
+
+                  Load Balancer
+
+                      |
+
+             FastAPI Backend
+
+             /            \
+
+        Redis          PostgreSQL
+
+              |
+
+        Background Worker
+
+Include
+
+ER Diagram
+Database schema
+API flow
+Cache flow
+
+This alone makes the project look senior.
+
+Database
+
+Tables
+
+Users
+id
+
+email
+
+password
+
+created_at
+URLs
+id
+
+user_id
+
+original_url
+
+short_code
+
+expires_at
+
+created_at
+
+click_count
+Click Analytics
+id
+
+url_id
+
+country
+
+device
+
+browser
+
+timestamp
+
+referer
+APIs
+POST /login
+
+POST /signup
+
+POST /shorten
+
+GET /{shortcode}
+
+GET /analytics/{id}
+
+DELETE /url/{id}
+
+PUT /url/{id}
+
+GET /dashboard
+
+GET /health
