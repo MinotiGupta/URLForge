@@ -485,3 +485,6 @@ PUT /url/{id}
 GET /dashboard
 
 GET /health
+
+
+[![CI](https://github.com/MinotiGupta/URLForge/actions/workflows/ci.yml/badge.svg)](https://github.com/MinotiGupta/URLForge/actions)

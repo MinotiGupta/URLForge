@@ -2,7 +2,7 @@
 
 > A production-grade URL shortener built with FastAPI, Redis, PostgreSQL, React & Docker.
 
-[![CI](https://github.com/MinotiGupta/URLForge/actions/workflows/ci.yml/badge.svg)](https://github.com/MinotiGupta/URLForge/actions)
+
 
 ---
 
