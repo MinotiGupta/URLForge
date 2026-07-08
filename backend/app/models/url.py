@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from sqlalchemy import Column, String, DateTime, Integer, ForeignKey, Text
+from sqlalchemy import Column, String, DateTime, Integer, ForeignKey, Text, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from ..database import Base
@@ -22,6 +22,3 @@ class URL(Base):
 
     owner = relationship("User", back_populates="urls")
     clicks = relationship("ClickAnalytic", back_populates="url", cascade="all, delete-orphan")
-
-
-from sqlalchemy import Boolean
