@@ -4,7 +4,6 @@ from datetime import datetime
 from ..database import get_db
 from ..models.url import URL
 from ..models.user import User
-from ..models.analytics import ClickAnalytic
 from ..schemas import DashboardOut
 from ..middleware.dependencies import get_current_admin
 
@@ -18,7 +17,7 @@ def get_dashboard(
 ):
     total_users = db.query(User).count()
     active_links = db.query(URL).filter(
-        (URL.expires_at == None) | (URL.expires_at > datetime.utcnow())
+        (URL.expires_at is None) | (URL.expires_at > datetime.utcnow())
     ).count()
     total_clicks = db.query(URL).with_entities(
         db.query(URL.click_count).with_entities(URL.click_count)

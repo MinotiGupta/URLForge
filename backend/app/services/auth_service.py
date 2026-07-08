@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from typing import Optional
-import uuid
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session

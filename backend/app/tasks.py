@@ -11,7 +11,7 @@ def cleanup_expired_urls():
     db = SessionLocal()
     try:
         expired = db.query(URL).filter(
-            URL.expires_at != None,
+            URL.expires_at is not None,
             URL.expires_at < datetime.utcnow()
         ).all()
 

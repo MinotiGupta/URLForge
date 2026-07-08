@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
-from typing import Optional, List
+from typing import List
 import hashlib
 from user_agents import parse as parse_ua
 
