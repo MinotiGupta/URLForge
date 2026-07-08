@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from slowapi import Limiter, _rate_limit_exceeded_handler
@@ -11,11 +12,16 @@ from .config import get_settings
 
 settings = get_settings()
 
-# Create tables
-Base.metadata.create_all(bind=engine)
-
 # Rate limiter
 limiter = Limiter(key_func=get_remote_address, default_limits=["100/minute"])
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Create tables on startup (deferred so tests can override the engine first)
+    Base.metadata.create_all(bind=engine)
+    yield
+
 
 app = FastAPI(
     title="URLForge API",
@@ -23,6 +29,7 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/api/docs",
     redoc_url="/api/redoc",
+    lifespan=lifespan,
 )
 
 # Middleware

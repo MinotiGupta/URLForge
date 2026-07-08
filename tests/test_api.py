@@ -4,15 +4,21 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from unittest.mock import patch
 
+import app.main as main_module
 from app.main import app
 from app.database import Base, get_db
 
-# Use SQLite in-memory for tests
+# Use SQLite for tests (no Postgres needed)
 SQLALCHEMY_TEST_URL = "sqlite:///./test.db"
-engine = create_engine(SQLALCHEMY_TEST_URL, connect_args={"check_same_thread": False})
-TestingSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+test_engine = create_engine(SQLALCHEMY_TEST_URL, connect_args={"check_same_thread": False})
+TestingSession = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
 
-Base.metadata.create_all(bind=engine)
+# Patch the module-level engine BEFORE any table creation so the lifespan uses SQLite
+main_module.engine = test_engine
+
+# Drop + recreate tables for a clean slate on every test run
+Base.metadata.drop_all(bind=test_engine)
+Base.metadata.create_all(bind=test_engine)
 
 
 def override_get_db():
